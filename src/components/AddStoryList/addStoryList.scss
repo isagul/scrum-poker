@@ -1,0 +1,36 @@
+.add-story-list-component {
+    margin: 2rem;
+    .inputs-area {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        > * {
+            margin: .5rem;
+        }
+
+        label {
+            flex: 0.4 1 10ch;
+        }
+
+        .input {
+            flex: 4 1 30ch;            
+        }
+    }
+    .story-area {
+        margin-top: 1rem;
+        p {
+            font-size: calc(16px - 0.3em);
+        }
+    }
+    .start-session {
+        display: block;
+        margin-top: 1rem;
+        margin-left: auto;
+    }
+    .invalid {
+        font-weight: 600;
+        padding-left: 3px;
+        color:#fd2469;
+    }
+}

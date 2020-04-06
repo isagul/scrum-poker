@@ -1,0 +1,11 @@
+.header-component {
+    height: 150px;
+    margin: 2rem;
+    .title {
+        border: solid 5px #5baffd;
+        width: calc(6em - 18px);
+        height: calc(6em - 18px);
+        text-align: center;
+        padding: 1rem;
+    }
+}
