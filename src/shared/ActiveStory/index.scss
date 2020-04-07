@@ -1,0 +1,29 @@
+.active-story-component {
+  border: solid 2px black;
+  width: 260px;
+  padding: 3rem 0;
+  border-radius: 3px;
+  .points-area {
+    display: flex;
+    flex-wrap: wrap;
+    .point {
+      border: 2px solid black;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border-radius: 3px;
+      margin: 1rem;
+      cursor: pointer;
+      &:hover {
+        border-color: lightgreen;
+      }
+    }
+    .active-point {
+      border-color: #2f962f;
+    }
+  }
+  
+}

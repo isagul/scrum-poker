@@ -2,10 +2,12 @@ import React from 'react';
 import App from '../../App';
 import { Input, Button } from 'antd';
 import { useFormik } from 'formik';
+import { withRouter } from "react-router-dom";
+import * as ROUTER from '../../constants/routes';
 import * as Yup from 'yup';
-import './addStoryList.scss';
+import './index.scss';
 
-const AddStoryList = () => {
+const AddStoryList = (props) => {
     const { TextArea } = Input;
 
     const formik = useFormik({
@@ -26,7 +28,8 @@ const AddStoryList = () => {
                 .required('required'),
         }),
         onSubmit: values => {
-            console.log(values)
+            console.log(values);
+            props.history.push(`${ROUTER.viewScrumMaster}/${values.sessionName}`);
         },
     });
     
@@ -79,4 +82,4 @@ const AddStoryList = () => {
     )
 }
 
-export default AddStoryList;
+export default withRouter(AddStoryList);
