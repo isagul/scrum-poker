@@ -1,15 +1,23 @@
 .active-story-component {
   border: solid 2px black;
-  width: 260px;
-  padding: 3rem 0;
+  width: 300px;
   border-radius: 3px;
+  padding-top: 1rem;
+  .title {
+    text-align: center;
+    font-weight: bold;
+  }
+  .story-name {
+    margin-left: 1rem;
+    font-weight: 600;
+  }
   .points-area {
     display: flex;
     flex-wrap: wrap;
     .point {
       border: 2px solid black;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -17,12 +25,18 @@
       border-radius: 3px;
       margin: 1rem;
       cursor: pointer;
-      &:hover {
-        border-color: lightgreen;
+      transition: background 0.1s ease-in;
+      -webkit-transition: background 0.1s ease-in;
+      -moz-transition: background 0.1s ease-in;
+      -o-transition: background 0.1s ease-in;
+      &:active {
+        background: #2f962f;
+        color: white;
       }
     }
     .active-point {
-      border-color: #2f962f;
+      background: #2f962f;
+      color: white;
     }
   }
   

@@ -1,0 +1,71 @@
+.view-scrum-master-component {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    > * {
+        margin: .5rem;
+    }
+    .table {
+        // flex: 1 1 auto;
+        flex-basis: 500px;
+        border:solid 2px black;
+        .ant-table-tbody {
+            tr {
+                .ant-table-cell {
+                    &:nth-child(1), &:nth-child(2) {
+                        border-right: solid 2px black;
+                    }
+                }
+            }
+        }
+        .ant-table-thead {
+            tr {
+                .ant-table-cell {
+                    border-bottom: solid 2px black;
+                    border-right: solid 2px black;
+                    &:last-child{
+                        border-right: none;
+                    }
+                }
+            }
+        }
+        .story-cell {
+            cursor: pointer;
+        }
+    }
+    .active-story-component {
+        // flex: 1 1 auto;
+    }
+    .scrum-master-panel {
+        // flex: 1 1 auto;
+        border: solid 2px black;
+        flex-basis: 300px;
+        padding: 1rem;
+        .title {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .story-name {
+            font-weight: 600;
+        }
+        .voters-list {
+            margin-bottom: 10px;
+            .name {
+                margin-right: 10px;
+            }
+            .status {
+
+            }
+        }
+        .end-voting-area {
+            text-align: center;
+            margin-top: 10rem;
+            .btn-end-voting {
+                
+            }
+        }
+        
+    }
+}

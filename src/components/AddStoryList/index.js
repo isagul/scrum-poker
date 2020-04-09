@@ -2,12 +2,13 @@ import React from 'react';
 import App from '../../App';
 import { Input, Button } from 'antd';
 import { useFormik } from 'formik';
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as ROUTER from '../../constants/routes';
 import * as Yup from 'yup';
 import './index.scss';
 
 const AddStoryList = (props) => {
+    let history = useHistory();
     const { TextArea } = Input;
 
     const formik = useFormik({
@@ -27,12 +28,32 @@ const AddStoryList = (props) => {
             stories: Yup.string()
                 .required('required'),
         }),
-        onSubmit: values => {
-            console.log(values);
-            props.history.push(`${ROUTER.viewScrumMaster}/${values.sessionName}`);
+        onSubmit: values => {         
+            fetch('http://localhost:3002/session/create', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: values.sessionName,
+                    voters_number: values.votersNumber,
+                    stories: values.stories
+                })
+            })
+                .then(function (res) { return res.json(); })
+                .then(function (response) {
+                    console.log('data', response);
+                    if (response.status) {
+                        history.push({
+                            pathname: `${ROUTER.viewScrumMaster}/${values.sessionName}`,
+                            state: { sessionName: values.sessionName }
+                        });
+                    }                    
+                })
         },
     });
-    
+
     return (
         <App>
             <div className="add-story-list-component">
@@ -82,4 +103,4 @@ const AddStoryList = (props) => {
     )
 }
 
-export default withRouter(AddStoryList);
+export default AddStoryList;
