@@ -1,0 +1,50 @@
+.view-developer-component {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    > * {
+        margin: .5rem;
+    }
+    .table {
+        // flex: 1 1 auto;
+        flex: 2;
+        border:solid 2px black;
+        .ant-table-tbody {
+            tr {
+                .ant-table-cell {
+                    &:nth-child(1), &:nth-child(2) {
+                        border-right: solid 2px black;
+                    }
+                }
+            }
+        }
+        .ant-table-thead {
+            tr {
+                .ant-table-cell {
+                    border-bottom: solid 2px black;
+                    border-right: solid 2px black;
+                    &:last-child{
+                        border-right: none;
+                    }
+                }
+            }
+        }
+        .story-cell {
+            cursor: pointer;
+        }
+    }
+
+    .active-story-component {
+        flex:1;
+    }
+}
+
+@media screen and (max-width: '414px') {
+    .view-developer-component {
+        flex-direction: column;
+        .active-story-component {
+            align-self: center;
+        }
+    }
+}

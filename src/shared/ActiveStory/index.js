@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './index.scss';
 
-const ActiveStory = ({ sessionName, storyName }) => {
+const ActiveStory = ({ sessionName, storyName, voterID }) => {
     const [clickedPoint, setClickedPoint] = useState(0);
-    const history = useHistory();
+    const location = useLocation();
 
     let voter = '';
 
@@ -27,10 +27,10 @@ const ActiveStory = ({ sessionName, storyName }) => {
     function getClickedPoint(point) {
         setClickedPoint(point.value);
 
-        if (history.location.pathname.includes('scrum-master')) {
+        if (location.pathname.includes('scrum-master')) {
             voter = 'Scrum Master';
         } else {
-            voter = 'Voter';
+            voter = `Voter ${voterID}`;
         }
 
         fetch('http://localhost:3002/story/vote', {
@@ -75,12 +75,15 @@ const ActiveStory = ({ sessionName, storyName }) => {
 
 ActiveStory.propTypes = {
     storyName: PropTypes.string.isRequired,
-    sessionName: PropTypes.string.isRequired
+    sessionName: PropTypes.string.isRequired,
+    voterID: PropTypes.string,
+    
 };
 
 ActiveStory.defaultProps = {
     storyName: '',
-    sessionName: ''
+    sessionName: '',
+    voterID: ''
 };
 
 export default ActiveStory;

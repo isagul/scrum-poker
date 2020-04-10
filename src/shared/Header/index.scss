@@ -1,11 +1,23 @@
 .header-component {
-    height: 150px;
+    min-height: 150px;
     margin: 2rem;
-    .title {
-        border: solid 5px #5baffd;
-        width: calc(6em - 18px);
-        height: calc(6em - 18px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .logo-area {
+        // border: solid 5px #5baffd;
+        /*width: calc(6em - 18px);
+        height: calc(6em - 18px);*/
         text-align: center;
         padding: 1rem;
+        .title{
+
+        }
+        .poker-logo {
+            height: 40px;
+        }
+    }
+    .open-links {
+        font-weight: 600;
     }
 }

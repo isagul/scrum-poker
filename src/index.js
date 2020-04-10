@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AddStoryList from './components/AddStoryList/index';
 import ViewScrumMaster from './components/VievScrumMaster/index';
+import ViewDeveloper from './components/ViewDeveloper/index';
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import './index.scss';
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Redirect exact from={ROUTES.defaultPath} to={ROUTES.addStoryList}></Redirect>
       <Route exact path={ROUTES.addStoryList} component={AddStoryList}></Route>
       <Route exact path={`${ROUTES.viewScrumMaster}/:sessionName`} component={ViewScrumMaster}></Route>
+      <Route exact path={`${ROUTES.viewDeveloper}/:sessionName/:id`} component={ViewDeveloper}></Route>
     </Switch>
   </Router>,
   document.getElementById('root')

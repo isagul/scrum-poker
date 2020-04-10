@@ -1,8 +1,8 @@
 .active-story-component {
   border: solid 2px black;
-  width: 300px;
   border-radius: 3px;
   padding-top: 1rem;
+  max-width: 300px;
   .title {
     text-align: center;
     font-weight: bold;
