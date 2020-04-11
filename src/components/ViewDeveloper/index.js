@@ -5,7 +5,6 @@ import App from '../../App';
 import './index.scss';
 
 const ViewDeveloper = (props) => {
-    const [storyCount, setStoryCount] = useState(0);
     const [stories, setStories] = useState([]);
     const [storyName, setStoryName] = useState('');
 
@@ -13,7 +12,32 @@ const ViewDeveloper = (props) => {
     const voterID = props.match.params.id;
 
     useEffect(() => {
-        // console.log(props.match);
+        getSessionInfo();
+        const sessionInterval = setInterval(getSessionInfo, 2000);
+        return (() => {
+            clearInterval(sessionInterval);
+        })
+    }, []);
+
+    function getSessionInfo(){
+        fetch('http://localhost:3002/story/get-active', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                session_name: sessionName,
+            })
+        })
+            .then(function (res) { return res.json(); })
+            .then(function (response) {
+                if (response.status) {
+                    if (response.story) {
+                        setStoryName(response.story.description);
+                    }
+                }
+            })
 
         fetch('http://localhost:3002/session/get-info', {
             method: 'POST',
@@ -22,7 +46,7 @@ const ViewDeveloper = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: sessionName,
+                session_name: sessionName,
             })
         })
             .then(function (res) { return res.json(); })
@@ -30,10 +54,9 @@ const ViewDeveloper = (props) => {
                 if (response.status) {
                     const { stories } = response.session;
                     setStories(stories);
-                    setStoryName(stories[storyCount].description);
                 }
             })
-    }, [storyCount, sessionName]);
+    }
 
     const columns = [
         {
@@ -42,7 +65,7 @@ const ViewDeveloper = (props) => {
             key: 'description',
             render: (text) => {
                 return (
-                    <span className="story-cell" onClick={() => { clickedStory(text) }}>{text}</span>
+                    <span className="story-cell">{text}</span>
                 )
             }
         },
@@ -62,26 +85,6 @@ const ViewDeveloper = (props) => {
         story["key"] = `${index + 1}`;
         return story;
     })
-
-    function clickedStory(story) {
-        // fetch('http://localhost:3002/story/get-story', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json, text/plain, */*',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         story_name: story,
-        //         session_name: props.match.params.sessionName
-        //     })
-        // })
-        //     .then(function (res) { return res.json(); })
-        //     .then(function (response) {
-        //         if (response.status) {
-        //             console.log(response);
-        //         }
-        //     })
-    }
 
     return (
         <App>

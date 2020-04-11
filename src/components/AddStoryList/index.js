@@ -3,6 +3,7 @@ import App from '../../App';
 import { Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import { useHistory } from "react-router-dom";
+import { openNotificationWithIcon } from '../../utils';
 import * as ROUTER from '../../constants/routes';
 import * as Yup from 'yup';
 import './index.scss';
@@ -28,7 +29,7 @@ const AddStoryList = (props) => {
             stories: Yup.string()
                 .required('required'),
         }),
-        onSubmit: values => {         
+        onSubmit: values => {
             fetch('http://localhost:3002/session/create', {
                 method: 'POST',
                 headers: {
@@ -43,13 +44,14 @@ const AddStoryList = (props) => {
             })
                 .then(function (res) { return res.json(); })
                 .then(function (response) {
-                    console.log('data', response);
                     if (response.status) {
                         history.push({
                             pathname: `${ROUTER.viewScrumMaster}/${values.sessionName}`,
                             state: { sessionName: values.sessionName }
                         });
-                    }                    
+                    } else {
+                        openNotificationWithIcon('error', `${response.message}`)
+                    }
                 })
         },
     });

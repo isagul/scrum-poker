@@ -8,6 +8,7 @@
     }
     .table {
         // flex: 1 1 auto;
+        height: 100%;
         flex: 2;
         border:solid 2px black;
         .ant-table-tbody {

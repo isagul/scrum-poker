@@ -5,19 +5,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
     .logo-area {
-        // border: solid 5px #5baffd;
-        /*width: calc(6em - 18px);
-        height: calc(6em - 18px);*/
         text-align: center;
         padding: 1rem;
-        .title{
-
-        }
         .poker-logo {
             height: 40px;
         }
     }
     .open-links {
         font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        height: 60px;
     }
 }

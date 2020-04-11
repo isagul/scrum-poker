@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { Spin } from 'antd';
 import './index.scss';
 
 const ActiveStory = ({ sessionName, storyName, voterID }) => {
     const [clickedPoint, setClickedPoint] = useState(0);
-    const location = useLocation();
+    const [currentVoter, setCurrentVoter] = useState({});
+    const [loading, setLoading] = useState(false);
 
-    let voter = '';
+    let activeVoter = '';
+
+    if (voterID === 0) {
+        activeVoter = 'Scrum Master';
+    } else {
+        activeVoter = `Voter ${voterID}`;
+    }
 
     const points = [
         { value: 1, label: '1' },
@@ -24,14 +31,42 @@ const ActiveStory = ({ sessionName, storyName, voterID }) => {
         { value: '', label: '?' }
     ];
 
-    function getClickedPoint(point) {
-        setClickedPoint(point.value);
+    useEffect(() => {
+        const sessionInterval = setInterval(() => {
+            fetch('http://localhost:3002/story/get-active', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session_name: sessionName,
+                })
+            })
+                .then(function (res) { return res.json(); })
+                .then(function (response) {
+                    if (response.status) {
+                        if (response.story) {
+                            response.story.voters.forEach(item => {
+                                if (item.name === activeVoter) {
+                                    setCurrentVoter(item);
+                                }
+                            })
+                        }                        
+                    }
+                })
+        }, 2000);
 
-        if (location.pathname.includes('scrum-master')) {
-            voter = 'Scrum Master';
-        } else {
-            voter = `Voter ${voterID}`;
-        }
+        return (() => {
+            clearInterval(sessionInterval);
+        })
+    }, [activeVoter, sessionName])
+
+
+
+    function getClickedPoint(point) {
+        setLoading(true);
+        setClickedPoint(point.value);
 
         fetch('http://localhost:3002/story/vote', {
             method: 'POST',
@@ -41,7 +76,7 @@ const ActiveStory = ({ sessionName, storyName, voterID }) => {
             },
             body: JSON.stringify({
                 session_name: sessionName,
-                voter_name: voter,
+                voter_name: activeVoter,
                 story_name: storyName,
                 story_point: point.value
             })
@@ -49,35 +84,44 @@ const ActiveStory = ({ sessionName, storyName, voterID }) => {
             .then(function (res) { return res.json(); })
             .then(function (response) {
                 if (response.status) {
-                    console.log(response);
+                    setLoading(false);
+                } else {
+                    setLoading(false);
                 }
             })
     }
 
     return (
-        <div className="active-story-component">
-            <p className="title">Active Story</p>
-            {storyName.length > 0 && <p className="story-name">{storyName}</p>}
-            <div className="points-area">
+        <Spin spinning={loading}>
+            <div className="active-story-component">
+                <p className="title">Active Story</p>
+                {storyName.length > 0 && <p className="story-name">{storyName}</p>}
+                <div className="points-area">
+                    {
+                        points.map(point => {
+                            return (
+                                <div key={point.value} className={`point ${point.value === clickedPoint ? 'active-point' : ''}`} onClick={() => getClickedPoint(point)}>
+                                    {point.label}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    points.map(point => {
-                        return (
-                            <div key={point.value} className={`point ${point.value === clickedPoint ? 'active-point' : ''}`} onClick={() => getClickedPoint(point)}>
-                                {point.label}
-                            </div>
-                        )
-                    })
+                    Object.keys(currentVoter).length > 0 ?
+                        currentVoter.point.length === 0 ? <p className="please-vote">Please Vote!</p> : <p className="vote-point">You voted {currentVoter.point} </p> :
+                        <p className="please-vote">Please Vote!</p>
                 }
             </div>
-        </div>
+        </Spin>
     )
 }
 
 ActiveStory.propTypes = {
     storyName: PropTypes.string.isRequired,
     sessionName: PropTypes.string.isRequired,
-    voterID: PropTypes.string,
-    
+    voterID: PropTypes.number,
+
 };
 
 ActiveStory.defaultProps = {
