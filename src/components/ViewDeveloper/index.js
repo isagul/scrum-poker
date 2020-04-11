@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import ActiveStory from '../../shared/ActiveStory';
 import App from '../../App';
+import { apiPrefix } from '../../constants/apiPrefix';
 import './index.scss';
 
 const ViewDeveloper = (props) => {
@@ -20,7 +21,7 @@ const ViewDeveloper = (props) => {
     }, []);
 
     function getSessionInfo(){
-        fetch('http://localhost:3002/story/get-active', {
+        fetch(`${apiPrefix}/story/get-active`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -39,7 +40,7 @@ const ViewDeveloper = (props) => {
                 }
             })
 
-        fetch('http://localhost:3002/session/get-info', {
+        fetch(`${apiPrefix}/session/get-info`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Spin } from 'antd';
+import { apiPrefix } from '../../constants/apiPrefix';
 import './index.scss';
 
 const ActiveStory = ({ sessionName, storyName, voterID }) => {
@@ -33,7 +34,7 @@ const ActiveStory = ({ sessionName, storyName, voterID }) => {
 
     useEffect(() => {
         const sessionInterval = setInterval(() => {
-            fetch('http://localhost:3002/story/get-active', {
+            fetch(`${apiPrefix}/story/get-active`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -68,7 +69,7 @@ const ActiveStory = ({ sessionName, storyName, voterID }) => {
         setLoading(true);
         setClickedPoint(point.value);
 
-        fetch('http://localhost:3002/story/vote', {
+        fetch(`${apiPrefix}/story/vote`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

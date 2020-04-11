@@ -1,0 +1,1 @@
+export const apiPrefix = "https://api-scrumpoker.herokuapp.com";

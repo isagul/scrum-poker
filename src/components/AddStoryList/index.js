@@ -4,6 +4,7 @@ import { Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import { useHistory } from "react-router-dom";
 import { openNotificationWithIcon } from '../../utils';
+import { apiPrefix } from '../../constants/apiPrefix';
 import * as ROUTER from '../../constants/routes';
 import * as Yup from 'yup';
 import './index.scss';
@@ -30,7 +31,7 @@ const AddStoryList = (props) => {
                 .required('required'),
         }),
         onSubmit: values => {
-            fetch('http://localhost:3002/session/create', {
+            fetch(`${apiPrefix}/session/create`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',

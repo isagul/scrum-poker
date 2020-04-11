@@ -5,6 +5,7 @@ import ActiveStory from '../../shared/ActiveStory';
 import {useHistory} from 'react-router-dom';
 import { openNotificationWithIcon } from '../../utils/index';
 import {defaultPath} from '../../constants/routes';
+import { apiPrefix } from '../../constants/apiPrefix';
 import './index.scss';
 
 let count = 0;
@@ -31,7 +32,7 @@ const ViewScrumMaster = (props) => {
     // setInterval(getSessionInfo, 2000);
 
     function getSessionInfo() {
-        fetch('http://localhost:3002/story/get-active', {
+        fetch(`${apiPrefix}/story/get-active` , {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -52,7 +53,7 @@ const ViewScrumMaster = (props) => {
                 }
             })
 
-        fetch('http://localhost:3002/session/get-info', {
+        fetch(`${apiPrefix}/session/get-info`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -113,7 +114,7 @@ const ViewScrumMaster = (props) => {
 
         if (isAllVotersVoted) {
             if (finalStoryPoint !== 0) {
-                fetch('http://localhost:3002/story/update-final-score', {
+                fetch(`${apiPrefix}/story/update-final-score`, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -139,7 +140,7 @@ const ViewScrumMaster = (props) => {
                 if (nextStory !== undefined) {
                     const { description } = nextStory;
 
-                    fetch('http://localhost:3002/session/update-next-story-status', {
+                    fetch(`${apiPrefix}/session/update-next-story-status`, {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json, text/plain, */*',

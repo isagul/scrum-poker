@@ -44,7 +44,7 @@ const Header = (props) => {
                 <p className="open-links" onClick={(event) => copyDevLink(event)}>
                     please share link of the developers panel to the teammates 
                     <span id="devLink" className="dev-url">
-                         http://localhost:3000/#/poker-planning-view-as-developer/
+                        {window.location.origin}/#/poker-planning-view-as-developer/
                         {`${sessionName}`}/1</span>
                 </p>
             }
