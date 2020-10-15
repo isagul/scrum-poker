@@ -52,10 +52,12 @@ const AddStoryList = (props) => {
                             pathname: `${ROUTER.viewScrumMaster}/${values.sessionName}`,
                             state: { sessionName: values.sessionName }
                         });
-                        setIsPlanCreated(false);
                     } else {
                         openNotificationWithIcon('error', `${response.message}`)
                     }
+                })
+                .finally(() => {
+                    setIsPlanCreated(false);
                 })
         },
     });
